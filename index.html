@@ -103,6 +103,161 @@
                 </div>
             </div>
         </section>
+
+        <section>
+            <h3>Как получить первый элемент массива?</h3>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = reset($array);
+
+                    if ($first === false) {
+                        // $array is empty or first value is false
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = null;
+
+                    foreach ($array as $value) {
+                        $first = $value;
+
+                        break;
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $firstKey = array_key_first($array);
+
+                    if ($firstKey === null) {
+                        $first = null;
+                    } else {
+                        $first = $array[$firstKey];
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = array_values($array)[0] ?? null;
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = array_shift($array);
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = array_reduce(
+                        $array,
+                        static fn($carry, $value) => $carry ?? $value,
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $reversed = array_reverse($array);
+
+                    $first = array_pop($reversed);
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    $first = new ArrayIterator($array)->current();
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    /**
+                     * ???
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return ?T
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return ($array is non-empty-array ? T : ?T)
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre>
+                <code class="language-php" data-trim>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return (
+                     *     $array is array{} ? null :
+                     *     $array is non-empty-array ? T :
+                     *     ?T
+                     * )
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.js"></script>
