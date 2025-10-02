@@ -34,7 +34,7 @@
             --r-heading-font-weight: 500;
         }
         .reveal pre {
-            font-size: .60em;
+            font-size: .55em;
             display: flex;
             align-self: center;
             justify-self: center;
@@ -304,7 +304,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <h4>PHP <8.5</h4>
-            <pre style="font-size: .5em">
+            <pre>
                 <code class="language-php" data-trim>
                     namespace Thesis\Amqp;
 
@@ -318,13 +318,7 @@
                             public DeliveryMode $deliveryMode = DeliveryMode::Whatever,
                             public ?int $priority = null,
                             public ?string $correlationId = null,
-                            public ?string $replyTo = null,
-                            public ?TimeSpan $expiration = null,
-                            public ?string $messageId = null,
-                            public ?\DateTimeImmutable $timestamp = null,
-                            public ?string $type = null,
-                            public ?string $userId = null,
-                            public ?string $appId = null,
+                            // ...
                         ) {}
                     }
                 </code>
@@ -333,7 +327,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <h4>PHP <8.5</h4>
-            <pre style="font-size: .6em">
+            <pre>
                 <code class="language-php" data-trim data-line-numbers="|8">
                     return new Message(
                         body: $message->body,
@@ -343,13 +337,7 @@
                         deliveryMode: $message->deliveryMode,
                         priority: $message->priority,
                         correlationId: $correlationId,
-                        replyTo: $this->replyTo,
-                        expiration: $message->expiration,
-                        messageId: $message->messageId,
-                        timestamp: $message->timestamp,
-                        type: $message->type,
-                        userId: $message->userId,
-                        appId: $message->appId,
+                        // ...
                     );
                 </code>
             </pre>
