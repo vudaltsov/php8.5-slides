@@ -9,18 +9,32 @@
     <link rel="stylesheet" href="highlight-phpstorm-light-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'TTCommons';
+            src: url('./fonts/TTCommons-Regular.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'TTCommons';
+            src: url('./fonts/TTCommons-Black.ttf') format('truetype');
+            font-weight: bold;
+        }
+        @font-face {
+            font-family: 'TTCommons';
+            src: url('./fonts/TTCommons-Italic.ttf') format('truetype');
+            font-style: italic;
+        }
         :root {
-            --r-main-font: "Montserrat", 'Noto Color Emoji', sans-serif;
-            --r-heading-font: "Montserrat", 'Noto Color Emoji', sans-serif;
+            --r-main-font: 'TTCommons', 'Montserrat', 'Noto Color Emoji', sans-serif;
+            --r-heading-font: 'TTCommons', 'Montserrat', 'Noto Color Emoji', sans-serif;
             --r-code-font: 'Montserrat Mono', 'Noto Color Emoji', monospace;
             --r-block-margin: 20px;
-            --r-link-color: #4F5B93;
-            --r-link-color-hover: #AE508D;
+            --r-link-color: #cc375d;
+            --r-link-color-hover: #962c47;
             --r-heading2-size: 2.6em;
             --r-heading-font-weight: 500;
         }
         .reveal pre {
-            font-size: .70em;
+            font-size: .60em;
             display: flex;
             align-self: center;
             justify-self: center;
@@ -38,9 +52,11 @@
             margin: 0 var(--r-block-margin) calc(var(--r-block-margin) * 2);
         }
         .reveal pre {
+            border-radius: 30px;
             width: auto;
         }
         .reveal pre code {
+            border-radius: 30px;
             max-height: none;
         }
         .reveal .r-stack > * {
@@ -73,19 +89,40 @@
         .reveal .present ~ .slide-number {
             display: none !important;
         }
+        .rfc, .pr {
+            font-size: 1.4em;
+            line-height: 1.1em;
+            position: relative;
+            display: block;
+            text-align: left;
+            margin-bottom: calc(var(--r-block-margin) * 2);
+        }
         .rfc {
-            font-size: 1.3em;
+            padding-left: 2.6em;
+        }
+        .pr {
+            padding-left: 2em;
         }
         .rfc:before {
             content: 'RFC';
+        }
+        .pr:before {
+            content: 'PR';
+        }
+        .rfc:before, .pr:before {
+            display: block;
+            position: absolute;
+            top: -0.3em;
+            bottom: 0;
+            left: 0;
             background: var(--r-link-color);
             border-radius: 8px;
             color: white;
-            padding: 6px 10px;
-            margin-right: 0.4em;
+            padding: 0 0.4em;
             font-size: 0.8em;
+            line-height: 1.9em;
         }
-        .rfc:hover:before {
+        .rfc:hover:before, .pr:hover:before {
             background: var(--r-link-color-hover);
         }
     </style>
@@ -94,23 +131,15 @@
 <body>
 <div class="reveal">
     <div class="slides">
+        <section data-background-image="title_bg.png" data-background-size="contain"></section>
+
         <div class="slide-number"></div>
 
-        <section>
-            <div style="display: flex; flex-direction: column; align-items: start; justify-content: space-between; height: 100%; text-align: left;">
-                <h1 style="font-size: 1.7em; font-weight: bold;">PHP 8.5 не сбавляет темп!</h1>
-                <div>
-                    <h2 style="font-size: 1em; font-weight: bold;">Валентин Удальцов</h2>
-                    <p>Пых, Thesis, Typhoon</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <h3>Как получить первый элемент массива?</h3>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = reset($array);
@@ -122,7 +151,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = null;
@@ -136,7 +165,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $firstKey = array_key_first($array);
@@ -150,7 +179,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = array_values($array)[0] ?? null;
@@ -158,7 +187,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = array_shift($array);
@@ -166,7 +195,17 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre>
+                <code class="language-php" data-trim>
+                    $reversed = array_reverse($array);
+
+                    $first = array_pop($reversed);
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = array_reduce(
@@ -177,17 +216,7 @@
             </pre>
         </section>
 
-        <section>
-            <pre>
-                <code class="language-php" data-trim>
-                    $reversed = array_reverse($array);
-
-                    $first = array_pop($reversed);
-                </code>
-            </pre>
-        </section>
-
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     $first = new ArrayIterator($array)->current();
@@ -195,7 +224,11 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
+            <p><a class="rfc" href="https://wiki.php.net/rfc/array_first_last" target="_blank">array_first() and array_last()</a></p>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     /**
@@ -209,7 +242,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     /**
@@ -225,7 +258,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     /**
@@ -241,7 +274,7 @@
             </pre>
         </section>
 
-        <section>
+        <section data-background-image="bg.png" data-background-size="contain">
             <pre>
                 <code class="language-php" data-trim>
                     /**
@@ -257,6 +290,389 @@
                     {
                         // ...
                     }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <p><a class="rfc" href="https://wiki.php.net/rfc/url_parsing_api" target="_blank">Add RFC 3986 and WHATWG URL compliant API</a></p>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <p><a class="rfc" href="https://wiki.php.net/rfc/clone_with_v2" target="_blank">Clone with v2</a></p>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre style="font-size: .5em">
+                <code class="language-php" data-trim>
+                    namespace Thesis\Amqp;
+
+                    final readonly class Message
+                    {
+                        public function __construct(
+                            public string $body = '',
+                            public array $headers = [],
+                            public ?string $contentType = null,
+                            public ?string $contentEncoding = null,
+                            public DeliveryMode $deliveryMode = DeliveryMode::Whatever,
+                            public ?int $priority = null,
+                            public ?string $correlationId = null,
+                            public ?string $replyTo = null,
+                            public ?TimeSpan $expiration = null,
+                            public ?string $messageId = null,
+                            public ?\DateTimeImmutable $timestamp = null,
+                            public ?string $type = null,
+                            public ?string $userId = null,
+                            public ?string $appId = null,
+                        ) {}
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre style="font-size: .6em">
+                <code class="language-php" data-trim data-line-numbers="|8">
+                    return new Message(
+                        body: $message->body,
+                        headers: $message->headers,
+                        contentType: $message->contentType,
+                        contentEncoding: $message->contentEncoding,
+                        deliveryMode: $message->deliveryMode,
+                        priority: $message->priority,
+                        correlationId: $correlationId,
+                        replyTo: $this->replyTo,
+                        expiration: $message->expiration,
+                        messageId: $message->messageId,
+                        timestamp: $message->timestamp,
+                        type: $message->type,
+                        userId: $message->userId,
+                        appId: $message->appId,
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+
+                        public function withCorrelationId(?string $correlationId): self
+                        {
+                            $message = clone $this;
+
+                            // ❌ Cannot modify readonly property
+                            $message->correlationId = $correlationId;
+
+                            return $message;
+                        }
+                    }
+
+                    $message = $message->withCorrelationId('...');
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+
+                        public function withCorrelationId(?string $correlationId): self
+                        {
+                            // ✅ 🥹
+                            return new self(
+                                body: $this->body,
+                                // ...
+                                correlationId: $correlationId,
+                                // ...
+                            );
+                        }
+                    }
+
+                    $message = $message->withCorrelationId('...');
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+
+                        public function withCorrelationId(?string $correlationId): self
+                        {
+                            // ✅ 🙂
+                            return new self(...[
+                                ...get_object_vars($this),
+                                'correlationId' => $correlationId,
+                            ]);
+                        }
+                    }
+
+                    $message = $message->withCorrelationId('...');
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+
+                        public function withCorrelationId(?string $correlationId): self
+                        {
+                            // ✅ 🤩
+                            return clone($this, [
+                                'correlationId' => $correlationId,
+                            ]);
+                        }
+                    }
+
+                    $message = $message->withCorrelationId('...');
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+                    }
+
+                    $message = clone(new Message(), [
+                        'correlationId' => $correlationId,
+                    ]);
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    final readonly class Message
+                    {
+                        // ...
+                    }
+
+                    // ❌ Cannot modify protected(set) readonly property
+                    // ❌ Message::$correlationId from global scope
+
+                    $message = clone(new Message(), [
+                        'correlationId' => $correlationId,
+                    ]);
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <a class="rfc" href="https://wiki.php.net/rfc/marking_return_value_as_important" target="_blank">#[NoDiscard]</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim data-line-numbers="|9">
+                    namespace Yiisoft\Validator;
+
+                    interface ValidatorInterface
+                    {
+                        public function validate(
+                            mixed $data,
+                            callable|iterable|object|string|null $rules = null,
+                            ?ValidationContext $context = null,
+                        ): Result;
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    new Validator()->validate(0, new Number(min: 1));
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    $result = new Validator()->validate(0, new Number(min: 1));
+
+                    // false 😲
+                    dump($result->isValid());
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim data-line-numbers="|5">
+                    final class Validator implements ValidatorInterface
+                    {
+                        // ...
+
+                        #[\NoDiscard('Неправильно, широкую на широкую надо!!!')]
+                        public function validate(/** args */): Result
+                        {
+                            // ...
+                        }
+
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    // ⚠️ Warning: The return value of method
+                    // ⚠️ Validator::validate() should either be used
+                    // ⚠️ or intentionally ignored by casting it as (void),
+                    // ⚠️ Неправильно, широкую на широкую надо!!!
+
+                    new Validator()->validate(0, new Number(min: 1));
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    public function testRuleWithoutHandler(): void
+                    {
+                        $this->expectException(RuleHandlerNotFoundException::class);
+
+                        $validator = new Validator();
+
+                        // ⚠️ Warning
+                        $validator->validate(/** args */);
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim data-line-numbers="|8">
+                    public function testRuleWithoutHandler(): void
+                    {
+                        $this->expectException(RuleHandlerNotFoundException::class);
+
+                        $validator = new Validator();
+
+                        // ✅
+                        (void) $validator->validate(/** args */);
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <a class="rfc" href="https://wiki.php.net/rfc/closures_in_const_expr" target="_blank">Closures in constant expressions</a>
+            <a class="rfc" href="https://wiki.php.net/rfc/fcc_in_const_expr" target="_blank">First Class Callables in constant expressions</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence" target="_blank">Add persistent curl share handles</a>
+            <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence_improvement" target="_blank">Persistent curl share handle improvement</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <a class="rfc" href="https://wiki.php.net/rfc/static-aviz" target="_blank">Asymmetric Visibility for Static Properties</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <a class="pr" href="https://github.com/php/php-src/pull/18167" target="_blank">#18167 Closure::getCurrent()</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    function fibonacci(int $n): int
+                    {
+                        return match ($n) {
+                            0 => 0,
+                            1 => 1,
+                            default => fibonacci($n - 1) + fibonacci($n - 2)
+                        };
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    $fibonacci = static function (int $n): int {
+                        return match ($n) {
+                            0 => 0,
+                            1 => 1,
+                            //         ???                 ???
+                            default => fibonacci($n - 1) + fibonacci($n - 2)
+                        };
+                    };
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP <8.5</h4>
+            <pre>
+                <code class="language-php" data-trim>
+                    $fibonacci = static function (int $n) use (&$fibonacci): int {
+                        return match ($n) {
+                            0 => 0,
+                            1 => 1,
+                            default => $fibonacci($n - 1) + $fibonacci($n - 2)
+                        };
+                    };
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h4>PHP 8.5</h4>
+            <pre>
+                <code class="language-php" data-trim data-line-numbers="|2,7">
+                    $fibonacci = static function (int $n): int {
+                        $self = Closure::getCurrent();
+
+                        return match ($n) {
+                            0 => 0,
+                            1 => 1,
+                            default => $self($n - 1) + $self($n - 2)
+                        };
+                    };
                 </code>
             </pre>
         </section>
