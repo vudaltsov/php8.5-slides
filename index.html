@@ -32,12 +32,45 @@
             --r-link-color-hover: #962c47;
             --r-heading2-size: 2.6em;
             --r-heading-font-weight: 500;
+            --r-gray: #aaaaaa;
+        }
+        section {
+            display: flex;
+            align-items: center;
+            justify-items: center;
         }
         .reveal pre {
             font-size: .55em;
             display: flex;
-            align-self: center;
-            justify-self: center;
+            flex-direction: column;
+            width: auto;
+            min-width: 70%;
+            border-radius: 1em;
+            overflow: hidden;
+            border: 4px solid var(--r-gray);
+            background: var(--r-gray);
+            box-shadow: none;
+        }
+        .reveal pre:before {
+            padding: .5em 1em;
+        }
+        .reveal pre.php-gte-85 {
+            border-color: var(--r-link-color);
+            background: var(--r-link-color);
+        }
+        .reveal pre.php-gte-85:before {
+            content: 'PHP >= 8.5';
+            color: white;
+        }
+        .reveal pre.php-lt-85:before {
+            content: 'PHP < 8.5';
+            color: white;
+        }
+        .reveal .hljs:not(:first-child).fragment {
+            top: 2.2em;
+        }
+        .reveal pre > code {
+            max-height: none;
         }
         .nohighlight {
             padding: 1em !important;
@@ -50,14 +83,6 @@
         }
         .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6, .reveal pre, .reveal p, .reveal img {
             margin: 0 var(--r-block-margin) calc(var(--r-block-margin) * 2);
-        }
-        .reveal pre {
-            border-radius: 30px;
-            width: auto;
-        }
-        .reveal pre code {
-            border-radius: 30px;
-            max-height: none;
         }
         .reveal .r-stack > * {
             margin: 0;
@@ -136,11 +161,11 @@
         <div class="slide-number"></div>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h3>Как получить первый элемент массива?</h3>
+            <h3>Как получить первый&nbsp;элемент&nbsp;массива?</h3>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = reset($array);
 
@@ -152,7 +177,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = null;
 
@@ -166,7 +191,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $firstKey = array_key_first($array);
 
@@ -180,7 +205,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = array_values($array)[0] ?? null;
                 </code>
@@ -188,7 +213,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = array_shift($array);
                 </code>
@@ -196,7 +221,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $reversed = array_reverse($array);
 
@@ -206,7 +231,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = array_reduce(
                         $array,
@@ -217,7 +242,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $first = new ArrayIterator($array)->current();
                 </code>
@@ -229,7 +254,17 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim>
+                    $first = array_first($array);
+
+                    $last = array_last($array);
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     /**
                      * ???
@@ -243,7 +278,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     /**
                      * @template T
@@ -259,7 +294,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     /**
                      * @template T
@@ -275,7 +310,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     /**
                      * @template T
@@ -303,8 +338,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     namespace Thesis\Amqp;
 
@@ -326,8 +360,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim data-line-numbers="|8">
                     return new Message(
                         body: $message->body,
@@ -344,8 +377,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -368,8 +400,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -393,8 +424,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -416,8 +446,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -438,8 +467,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -454,8 +482,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     final readonly class Message
                     {
@@ -477,8 +504,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim data-line-numbers="|9">
                     namespace Yiisoft\Validator;
 
@@ -495,8 +521,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     new Validator()->validate(0, new Number(min: 1));
                 </code>
@@ -504,8 +529,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $result = new Validator()->validate(0, new Number(min: 1));
 
@@ -516,8 +540,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim data-line-numbers="|5">
                     final class Validator implements ValidatorInterface
                     {
@@ -536,8 +559,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     // ⚠️ Warning: The return value of method
                     // ⚠️ Validator::validate() should either be used
@@ -550,8 +572,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim>
                     public function testRuleWithoutHandler(): void
                     {
@@ -567,8 +588,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim data-line-numbers="|8">
                     public function testRuleWithoutHandler(): void
                     {
@@ -584,26 +604,29 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <a class="rfc" href="https://wiki.php.net/rfc/closures_in_const_expr" target="_blank">Closures in constant expressions</a>
-            <a class="rfc" href="https://wiki.php.net/rfc/fcc_in_const_expr" target="_blank">First Class Callables in constant expressions</a>
+            <div>
+                <a class="rfc" href="https://wiki.php.net/rfc/closures_in_const_expr" target="_blank">Closures in constant expressions</a>
+                <a class="rfc" href="https://wiki.php.net/rfc/fcc_in_const_expr" target="_blank">First Class Callables in constant expressions</a>
+            </div>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence" target="_blank">Add persistent curl share handles</a>
-            <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence_improvement" target="_blank">Persistent curl share handle improvement</a>
+            <div>
+                <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence" target="_blank">Add persistent curl share handles</a>
+                <a class="rfc" href="https://wiki.php.net/rfc/curl_share_persistence_improvement" target="_blank">Persistent curl share handle improvement</a>
+            </div>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <a class="rfc" href="https://wiki.php.net/rfc/static-aviz" target="_blank">Asymmetric Visibility for Static Properties</a>
+            <a class="rfc" href="https://wiki.php.net/rfc/static-aviz" target="_blank">Asymmetric Visibility <br>for Static Properties</a>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <a class="pr" href="https://github.com/php/php-src/pull/18167" target="_blank">#18167 Closure::getCurrent()</a>
+            <a class="pr" href="https://github.com/php/php-src/pull/18167" target="_blank">Implement Closure::getCurrent()<br>to retrieve current closure</a>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     function fibonacci(int $n): int
                     {
@@ -618,8 +641,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $fibonacci = static function (int $n): int {
                         return match ($n) {
@@ -634,8 +656,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP <8.5</h4>
-            <pre>
+            <pre class="php-lt-85">
                 <code class="language-php" data-trim>
                     $fibonacci = static function (int $n) use (&$fibonacci): int {
                         return match ($n) {
@@ -649,8 +670,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <h4>PHP 8.5</h4>
-            <pre>
+            <pre class="php-gte-85">
                 <code class="language-php" data-trim data-line-numbers="|2,7">
                     $fibonacci = static function (int $n): int {
                         $self = Closure::getCurrent();
