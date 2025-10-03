@@ -1,8 +1,6 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reset.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/reveal.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.2.1/theme/simple.min.css" id="theme">
@@ -54,7 +52,11 @@
         .reveal pre:before {
             padding: .5em 1em;
         }
-        .reveal pre.php-gte-85 {
+        .reveal pre.php-lt-85:before {
+            content: 'PHP < 8.5';
+            color: white;
+        }
+        .reveal pre.php-gte-85, .reveal pre.php-gte-86 {
             border-color: var(--r-link-color);
             background: var(--r-link-color);
         }
@@ -62,8 +64,8 @@
             content: 'PHP >= 8.5';
             color: white;
         }
-        .reveal pre.php-lt-85:before {
-            content: 'PHP < 8.5';
+        .reveal pre.php-gte-86:before {
+            content: 'PHP >= 8.6 ?';
             color: white;
         }
         .reveal .hljs:not(:first-child).fragment {
@@ -120,7 +122,7 @@
             position: relative;
             display: block;
             text-align: left;
-            margin-bottom: calc(var(--r-block-margin) * 2);
+            margin: calc(var(--r-block-margin) * 2) 0;
         }
         .rfc {
             padding-left: 2.6em;
@@ -166,33 +168,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
-                    $first = reset($array);
-
-                    if ($first === false) {
-                        // $array is empty or first value is false
-                    }
-                </code>
-            </pre>
-        </section>
-
-        <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-lt-85">
-                <code class="language-php" data-trim>
-                    $first = null;
-
-                    foreach ($array as $value) {
-                        $first = $value;
-
-                        break;
-                    }
-                </code>
-            </pre>
-        </section>
-
-        <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $firstKey = array_key_first($array);
 
                     if ($firstKey === null) {
@@ -206,7 +182,41 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
+                    $first = null;
+
+                    foreach ($array as $value) {
+                        $first = $value;
+
+                        break;
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    $first = reset($array);
+
+                    if ($first === false) {
+                        // $array is empty or first value is false
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    $first = new ArrayIterator($array)->current();
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
                     $first = array_values($array)[0] ?? null;
                 </code>
             </pre>
@@ -214,7 +224,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $first = array_shift($array);
                 </code>
             </pre>
@@ -222,7 +232,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $reversed = array_reverse($array);
 
                     $first = array_pop($reversed);
@@ -232,19 +242,11 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $first = array_reduce(
                         $array,
                         static fn($carry, $value) => $carry ?? $value,
                     );
-                </code>
-            </pre>
-        </section>
-
-        <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-lt-85">
-                <code class="language-php" data-trim>
-                    $first = new ArrayIterator($array)->current();
                 </code>
             </pre>
         </section>
@@ -255,7 +257,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $first = array_first($array);
 
                     $last = array_last($array);
@@ -264,66 +266,126 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-gte-85">
-                <code class="language-php" data-trim>
-                    /**
-                     * ???
-                     */
-                    function array_first(array $array): mixed
-                    {
-                        // ...
-                    }
+            <pre class="php-lt-85">
+                <code class="language-bash" data-trim>
+                    composer require symfony/polyfill-php85
                 </code>
             </pre>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-gte-85">
-                <code class="language-php" data-trim>
-                    /**
-                     * @template T
-                     * @param array&lt;T&gt; $array
-                     * @return ?T
-                     */
-                    function array_first(array $array): mixed
+            <p><a class="rfc" href="https://wiki.php.net/rfc/pipe-operator-v3" target="_blank">Pipe operator v3</a></p>
+        </section>
+
+        <section>
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    function normalizeUsername(string $name): string
                     {
-                        // ...
+                        $name = trim($name);
+                        $name = strtolower($name);
+                        $name = preg_replace(T_ME_REGEX, '', $name);
+                        $name = trim($name);
+
+                        return $name;
                     }
                 </code>
             </pre>
         </section>
 
-        <section data-background-image="bg.png" data-background-size="contain">
+        <section>
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
-                    /**
-                     * @template T
-                     * @param array&lt;T&gt; $array
-                     * @return ($array is non-empty-array ? T : ?T)
-                     */
-                    function array_first(array $array): mixed
+                <code class="language-php" data-trim data-line-numbers="|6-7">
+                    function normalizeUsername(string $name): string
                     {
-                        // ...
+                        return $name
+                            |> trim(...)
+                            |> strtolower(...)
+                            |> fn (string $name) => preg_replace(T_ME_REGEX, '', $name)
+                            |> trim(...);
                     }
                 </code>
             </pre>
         </section>
 
-        <section data-background-image="bg.png" data-background-size="contain">
+        <section>
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
-                    /**
-                     * @template T
-                     * @param array&lt;T&gt; $array
-                     * @return (
-                     *     $array is array{} ? null :
-                     *     $array is non-empty-array ? T :
-                     *     ?T
-                     * )
-                     */
-                    function array_first(array $array): mixed
+                <code class="language-php" data-trim data-line-numbers="6-8">
+                    function normalizeUsername(string $name): string
                     {
-                        // ...
+                        return $name
+                            |> trim(...)
+                            |> strtolower(...)
+                            |> fn (string $name) =>
+                                preg_replace(T_ME_REGEX, '', $name)
+                                    |> trim(...);
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers="6-8">
+                    0
+                        |> fn($x) => $x < 5
+                        |> fn($x) => var_dump($x);
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers="6-8">
+                    0
+                        |> fn($x) => $x < (5 |> fn($x) => var_dump($x));
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers="6-9">
+                    function normalizeUsername(string $name): string
+                    {
+                        return $name
+                            |> trim(...)
+                            |> strtolower(...)
+                            // ❌ Fatal error:
+                            // ❌ Arrow functions on the right hand side of |>
+                            // ❌ must be parenthesized
+                            |> fn (string $name) => preg_replace(T_ME_REGEX, '', $name)
+                            |> trim(...);
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    function normalizeUsername(string $name): string
+                    {
+                        return $name
+                            |> trim(...)
+                            |> strtolower(...)
+                            |> (fn (string $name) => preg_replace(T_ME_REGEX, '', $name))
+                            |> trim(...);
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-86">
+                <code class="language-php" data-trim data-line-numbers>
+                    function normalizeUsername(string $name): string
+                    {
+                        return $name
+                            |> trim(...)
+                            |> strtolower(...)
+                            |> preg_replace(T_ME_REGEX, '', ?)
+                            |> trim(...);
                     }
                 </code>
             </pre>
@@ -333,13 +395,89 @@
             <p><a class="rfc" href="https://wiki.php.net/rfc/url_parsing_api" target="_blank">Add RFC 3986 and WHATWG URL compliant API</a></p>
         </section>
 
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <img src="exploit.png" alt="" style="max-width: 80%">
+            <a href="https://claroty.com/team82/research/exploiting-url-parsing-confusion">Exploiting URL Parsing Confusion</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    namespace Uri;
+
+                    class UriException extends \Exception {}
+
+                    class InvalidUriException extends UriException {}
+
+                    enum UriComparisonMode
+                    {
+                        case IncludeFragment;
+                        case ExcludeFragment;
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    namespace Uri\Rfc3986;
+
+                    final readonly class Uri
+                    {
+                        public static function parse(string $uri, ?Uri $baseUrl = null): ?static {}
+
+                        /** @throws Uri\InvalidUriException */
+                        public function __construct(string $uri, ?Uri $baseUrl = null) {}
+
+                        public function getScheme(): ?string {}
+
+                        public function getRawScheme(): ?string {}
+
+                        /** @throws Uri\InvalidUriException */
+                        public function withScheme(?string $scheme): static {}
+
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    namespace Uri\WhatWg;
+
+                    final readonly class Url { /** ... */ }
+
+                    enum UrlValidationErrorType { /** cases */ }
+
+                    final readonly class UrlValidationError
+                    {
+                        public function __construct(
+                            public string $context,
+                            public UrlValidationErrorType $type,
+                            public bool $failure,
+                        ) {}
+                    }
+
+                    class InvalidUrlException extends \Uri\InvalidUriException
+                    {
+                        /** @param list&lt;UrlValidationError&gt; $errors */
+                        public readonly array $errors;
+                    }
+                </code>
+            </pre>
+        </section>
+
         <section data-background-image="bg.png" data-background-size="contain">
             <p><a class="rfc" href="https://wiki.php.net/rfc/clone_with_v2" target="_blank">Clone with v2</a></p>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     namespace Thesis\Amqp;
 
                     final readonly class Message
@@ -378,7 +516,30 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Message
+                    {
+                        // ...
+
+                        public function withCorrelationId(?string $correlationId): self
+                        {
+                            return new self(
+                                body: $this->body,
+                                // ...
+                                correlationId: $correlationId,
+                                // ...
+                            );
+                        }
+                    }
+
+                    $message = $message->withCorrelationId('...');
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
                     final readonly class Message
                     {
                         // ...
@@ -401,31 +562,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
-                    final readonly class Message
-                    {
-                        // ...
-
-                        public function withCorrelationId(?string $correlationId): self
-                        {
-                            // ✅ 🥹
-                            return new self(
-                                body: $this->body,
-                                // ...
-                                correlationId: $correlationId,
-                                // ...
-                            );
-                        }
-                    }
-
-                    $message = $message->withCorrelationId('...');
-                </code>
-            </pre>
-        </section>
-
-        <section data-background-image="bg.png" data-background-size="contain">
-            <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     final readonly class Message
                     {
                         // ...
@@ -447,7 +584,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     final readonly class Message
                     {
                         // ...
@@ -468,7 +605,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     final readonly class Message
                     {
                         // ...
@@ -483,7 +620,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     final readonly class Message
                     {
                         // ...
@@ -500,7 +637,7 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
-            <a class="rfc" href="https://wiki.php.net/rfc/marking_return_value_as_important" target="_blank">#[NoDiscard]</a>
+            <a class="rfc" href="https://wiki.php.net/rfc/marking_return_value_as_important" target="_blank">Marking return values as important (#[NoDiscard])</a>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
@@ -522,7 +659,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     new Validator()->validate(0, new Number(min: 1));
                 </code>
             </pre>
@@ -530,7 +667,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $result = new Validator()->validate(0, new Number(min: 1));
 
                     // false 😲
@@ -560,7 +697,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     // ⚠️ Warning: The return value of method
                     // ⚠️ Validator::validate() should either be used
                     // ⚠️ or intentionally ignored by casting it as (void),
@@ -573,7 +710,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     public function testRuleWithoutHandler(): void
                     {
                         $this->expectException(RuleHandlerNotFoundException::class);
@@ -589,7 +726,7 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-gte-85">
-                <code class="language-php" data-trim data-line-numbers="|8">
+                <code class="language-php" data-trim data-line-numbers>
                     public function testRuleWithoutHandler(): void
                     {
                         $this->expectException(RuleHandlerNotFoundException::class);
@@ -605,9 +742,167 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <div>
-                <a class="rfc" href="https://wiki.php.net/rfc/closures_in_const_expr" target="_blank">Closures in constant expressions</a>
+                <a class="rfc" href="https://wiki.php.net/rfc/closures_in_const_expr" target="_blank">Support Closures in constant expressions</a>
                 <a class="rfc" href="https://wiki.php.net/rfc/fcc_in_const_expr" target="_blank">First Class Callables in constant expressions</a>
             </div>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Pay
+                    {
+                        public function __construct(
+                            #[Assert(is_numeric(...))]
+                            public string $amount,
+                        ) {}
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Register
+                    {
+                        public function __construct(
+                            #[Assert(self::isLengthy(...))]
+                            public string $rawPassword,
+                        ) {}
+
+                        private static function isLengthy(string $pass): bool
+                        {
+                            return mb_strlen($pass) >= 8;
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Register
+                    {
+                        public function __construct(
+                            #[Assert(static function (string $password): bool {
+                                return trim($password) !== '';
+                            })]
+                            public string $rawPassword,
+                        ) {}
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Register
+                    {
+                        private const Closure NON_EMPTY =
+                            static function (string $password): bool {
+                                return trim($password) !== '';
+                            };
+
+                        public function __construct(
+                            #[Assert(self::NON_EMPTY)]
+                            public string $rawPassword,
+                        ) {}
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    const NON_EMPTY_VALIDATOR = static function (string $password): bool {
+                        return trim($password) !== '';
+                    };
+
+                    final readonly class Register
+                    {
+                        public function __construct(
+                            #[Assert(NON_EMPTY_VALIDATOR)]
+                            public string $rawPassword,
+                        ) {}
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Service
+                    {
+                        public function __construct(
+                            private Closure $onFinish,
+                            private LoggerInterface $logger = new NullLogger(),
+                        ) {}
+
+                        public function do(): void
+                        {
+                            // ...
+
+                            ($this->onFinish)();
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Service
+                    {
+                        private Closure $onFinish;
+
+                        public function __construct(
+                            ?Closure $onFinish = null,
+                        ) {
+                            $this->onFinish = $onFinish ?? static function (): void {};
+                        }
+
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final readonly class Service
+                    {
+                        public function __construct(
+                            private Closure $onFinish = static function (): void {},
+                        ) {}
+
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    function void(): void {}
+
+                    final readonly class Service
+                    {
+                        public function __construct(
+                            private Closure $onFinish = void(...),
+                        ) {}
+
+                        // ...
+                    }
+                </code>
+            </pre>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
@@ -618,7 +913,75 @@
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-lt-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    namespace Composer\Util\Http;
+
+                    class CurlDownloader
+                    {
+                        public function __construct(/** args */)
+                        {
+                            // ...
+
+                            $this->shareHandle = $sh = curl_share_init();
+                            curl_share_setopt($sh, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+                            curl_share_setopt($sh, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+                            curl_share_setopt($sh, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+
+                            // ...
+                        }
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre>
+                <code class="language-php" data-trim data-line-numbers>
+                    $db = new PDO('mysql:host=localhost;dbname=test', $user, $pass, [
+                        PDO::ATTR_PERSISTENT => true
+                    ]);
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    $shareHandle = curl_share_init_persistent(
+                        share_options: [
+                            CURL_LOCK_DATA_COOKIE, // ❌
+                            CURL_LOCK_DATA_DNS,
+                            CURL_LOCK_DATA_SSL_SESSION,
+                        ],
+                    );
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
             <a class="rfc" href="https://wiki.php.net/rfc/static-aviz" target="_blank">Asymmetric Visibility <br>for Static Properties</a>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    final class GlobalCounter
+                    {
+                        public private(set) static int $current = 0;
+
+                        public static function increment(): void
+                        {
+                            ++self::$current;
+                        }
+                    }
+
+                    GlobalCounter::increment();
+                    GlobalCounter::increment();
+
+                    var_dump(GlobalCounter::$current); // 2
+                </code>
+            </pre>
         </section>
 
         <section data-background-image="bg.png" data-background-size="contain">
@@ -627,13 +990,13 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     function fibonacci(int $n): int
                     {
                         return match ($n) {
                             0 => 0,
                             1 => 1,
-                            default => fibonacci($n - 1) + fibonacci($n - 2)
+                            default => fibonacci($n - 1) + fibonacci($n - 2),
                         };
                     }
                 </code>
@@ -642,13 +1005,12 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $fibonacci = static function (int $n): int {
                         return match ($n) {
                             0 => 0,
                             1 => 1,
-                            //         ???                 ???
-                            default => fibonacci($n - 1) + fibonacci($n - 2)
+                            default => ???($n - 1) + ???($n - 2),
                         };
                     };
                 </code>
@@ -657,12 +1019,12 @@
 
         <section data-background-image="bg.png" data-background-size="contain">
             <pre class="php-lt-85">
-                <code class="language-php" data-trim>
+                <code class="language-php" data-trim data-line-numbers>
                     $fibonacci = static function (int $n) use (&$fibonacci): int {
                         return match ($n) {
                             0 => 0,
                             1 => 1,
-                            default => $fibonacci($n - 1) + $fibonacci($n - 2)
+                            default => $fibonacci($n - 1) + $fibonacci($n - 2),
                         };
                     };
                 </code>
@@ -678,9 +1040,103 @@
                         return match ($n) {
                             0 => 0,
                             1 => 1,
-                            default => $self($n - 1) + $self($n - 2)
+                            default => $self($n - 1) + $self($n - 2),
                         };
                     };
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <h3>Полезновое</h3>
+            <ul>
+                <li><a href="https://web-php-pr-1454.preview.thephp.foundation/releases/8.5/en.php">Черновик лендинга к релизу 8.5</a></li>
+                <li><a href="https://github.com/symfony/polyfill-php85">Полифилы для новых классов и функций от Symfony</a></li>
+                <li><a href="https://t.me/phpyh/598">Мой доклад «PHP 8.4: живее всех живых!»</a></li>
+                <li><a href="https://thephp.foundation/blog/2025/10/01/design-contest/">🤑 $1000</a></li>
+            </ul>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <div style="display: flex; align-items: center; justify-items: center;">
+                <div>
+                    <h6 style="margin: 0;">Оцени мой доклад 🙏</h6>
+                    <a href="https://clck.ru/3PXjQq" target="_blank">
+                        <img src="qr.png" alt="Оцени доклад" style="margin: 0">
+                    </a>
+                </div>
+                <div>
+                    <p>
+                        <a href="https://t.me/vudaltsov">@vudaltsov</a><br>
+                        <a href="https://t.me/phpyh">Пых</a> / <a href="https://t.me/phpyhconf">Пых.конф</a><br>
+                        <a href="https://github.com/thesis-php">Thesis</a> / <a href="https://github.com/typhoon-php">Typhoon</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    /**
+                     * ???
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return ?T
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return ($array is non-empty-array ? T : ?T)
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
+                </code>
+            </pre>
+        </section>
+
+        <section data-background-image="bg.png" data-background-size="contain">
+            <pre class="php-gte-85">
+                <code class="language-php" data-trim data-line-numbers>
+                    /**
+                     * @template T
+                     * @param array&lt;T&gt; $array
+                     * @return (
+                     *     $array is array{} ? null :
+                     *     $array is non-empty-array ? T :
+                     *     ?T
+                     * )
+                     */
+                    function array_first(array $array): mixed
+                    {
+                        // ...
+                    }
                 </code>
             </pre>
         </section>
